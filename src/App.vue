@@ -14,12 +14,19 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url("https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&display=swap");
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  margin: auto;
+}
+html {
+  font-family: "Arvo", serif;
+}
+body {
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  background-color: #0f0a0a;
 }
 </style>
