@@ -12,31 +12,63 @@
     </div>
     <div class="pre-condition-navigation">
       <div class="btn-low">
-        <input type="checkbox" id="box-designed" />
+        <input
+          checked
+          v-model="characterInclLowerCase"
+          type="checkbox"
+          class="box-lower"
+          id="box-designed"
+        />
         <label for="box-designed" class="designed-box">Lowercase</label>
       </div>
       <div class="btn-up">
-        <input type="checkbox" id="box-designed" />
+        <input
+          checked
+          v-model="characterInclUpperCase"
+          type="checkbox"
+          class="box-upper"
+          id="box-designed"
+        />
         <label for="box-designed" class="designed-box">Uppercase</label>
       </div>
       <div class="btn-numb">
-        <input type="checkbox" id="box-designed" />
+        <input
+          checked
+          v-model="characterInclNumber"
+          type="checkbox"
+          class="box-number"
+          id="box-designed"
+        />
         <label for="box-designed" class="designed-box">Number</label>
       </div>
       <div class="btn-spec">
-        <input type="checkbox" id="box-designed" />
+        <input
+          checked
+          v-model="characterInclSpecific"
+          type="checkbox"
+          class="box-specific"
+          id="box-designed"
+        />
         <label for="box-designed" class="designed-box">Specific</label>
       </div>
     </div>
     <div>
-      <p>Password Length:</p>
+      <label for="myRange" class="password-length">Password Length:</label>
+      <br />
       <input
         class="regulator-password-length"
         type="range"
         min="8"
         max="35"
-        value="8"
+        v-model="value"
+        id="myRange"
+        step="1"
+        @input="generatePassword()"
       />
+
+      <label class="length-of-password" for="myRange">{{
+        lengthpassword
+      }}</label>
     </div>
   </body>
 </template>
@@ -44,8 +76,37 @@
 <script>
 export default {
   name: "PasswordGenerator",
-  props: {
-    msg: String,
+  data() {
+    return {
+      lengthpassword: 8,
+      characterInclLowerCase: true,
+      characterInclUpperCase: false,
+      characterInclNumber: false,
+      characterInclSpecific: false,
+    };
+  },
+  methods: {
+    generatePassword() {
+      if (!this.lengthpassword) return;
+      this.triggerLoading(true);
+      let password = "";
+      let characters = "abcdefghijklmnopqrstuvwxyz";
+      if (this.characterInclUpperCase)
+        characters += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      if (this.characterInclNumber) characters += "0123456789";
+      if (this.characterInclSpecific)
+        characters += "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
+      for (let i = 0; i < this.lengthpassword; i++) {
+        password += characters.charAt(
+          Math.floor(Math.random() * characters.length)
+        );
+      }
+      this.generatedPassword = password;
+      this.triggerLoading(false);
+    },
+    triggerLoading(state) {
+      this.isLoading = state;
+    },
   },
 };
 </script>
@@ -60,6 +121,7 @@ html {
 body {
   display: flex;
   justify-content: center;
+  flex-direction: column;
 }
 
 .btnToCopy {
@@ -88,18 +150,21 @@ h1 {
 }
 .pre-condition-navigation {
   display: grid;
-  width: 50vw;
-  height: 30vh;
+  width: 40vw;
+  height: 14vh;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   grid-template-areas:
     "btn-1 btn-2"
     "btn-3 btn-4";
 }
-@media and screen(min-width: 800px) {
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr;
-  grid-template-areas: "btn-1 btn-2 btn-3 btn-4";
+@media screen and (min-width: 800px) {
+  .pre-condition-navigation {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "btn-1 btn-2 btn-3 btn-4";
+    gap: 2rem;
+  }
 }
 .btn-low {
   grid-area: btn-1;
@@ -125,21 +190,71 @@ h1 {
 input {
   all: unset;
 }
-label {
+.designed-box {
   padding: 0.25rem;
   color: #2292a4;
   border: 0.15rem solid #2292a4;
   background-color: #0f0a0a;
   border-radius: 0.2rem;
 }
-
-input:checked + label {
+input[type="checkbox"]:checked + .designed-box {
   background-color: #2292a4;
   color: #f5efed;
   border: 0.15rem solid #2292a4;
 }
 
-input:focus:unchecked + label {
-  border: 0.2rem solid navy;
+.box-upper:focus + .designed-box {
+  background-color: #2292a4;
+  color: #f5efed;
+  border: 0.15rem solid #2292a4;
+}
+.box-number:checked + .designed-box {
+  background-color: #2292a4;
+  color: #f5efed;
+  border: 0.15rem solid #2292a4;
+}
+.box-specific:checked + .designed-box {
+  background-color: #2292a4;
+  color: #f5efed;
+  border: 0.15rem solid #2292a4;
+}
+
+.box-lowercase:focus + .designed-box {
+  border: 0.2rem solid #2292a4;
+}
+.password-length {
+  color: #f5efed;
+  padding-bottom: 2rem;
+  border-style: none;
+}
+
+.regulator-password-length {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 30vw;
+  background-color: #f5efed;
+  height: 0.5rem;
+  border-radius: 0.5rem;
+}
+.regulator-password-length::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: red;
+  cursor: pointer;
+}
+
+.regulator-password-length::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #04aa6d;
+  cursor: pointer;
+}
+
+.length-of-password {
+  border-style: none;
+  color: f5efed;
 }
 </style>
