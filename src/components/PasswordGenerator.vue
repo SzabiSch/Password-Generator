@@ -96,6 +96,11 @@ h1 {
     "btn-1 btn-2"
     "btn-3 btn-4";
 }
+@media and screen(min-width: 800px) {
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "btn-1 btn-2 btn-3 btn-4";
+}
 .btn-low {
   grid-area: btn-1;
 }
