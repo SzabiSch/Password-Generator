@@ -13,43 +13,39 @@
     <div class="pre-condition-navigation">
       <div class="btn-low">
         <input
-          checked
           v-model="characterInclLowerCase"
           type="checkbox"
           class="box-lower"
-          id="box-designed"
+          id="box-lower"
         />
-        <label for="box-designed" class="designed-box">Lowercase</label>
+        <label for="box-lower" class="designed-box">Lowercase</label>
       </div>
       <div class="btn-up">
         <input
-          checked
           v-model="characterInclUpperCase"
           type="checkbox"
           class="box-upper"
-          id="box-designed"
+          id="box-upper"
         />
-        <label for="box-designed" class="designed-box">Uppercase</label>
+        <label for="box-upper" class="designed-box">Uppercase</label>
       </div>
       <div class="btn-numb">
         <input
-          checked
           v-model="characterInclNumber"
           type="checkbox"
           class="box-number"
-          id="box-designed"
+          id="box-number"
         />
-        <label for="box-designed" class="designed-box">Number</label>
+        <label for="box-number" class="designed-box">Number</label>
       </div>
       <div class="btn-spec">
         <input
-          checked
           v-model="characterInclSpecific"
           type="checkbox"
           class="box-specific"
-          id="box-designed"
+          id="box-specific"
         />
-        <label for="box-designed" class="designed-box">Specific</label>
+        <label for="box-specific" class="designed-box">Specific</label>
       </div>
     </div>
     <div>
@@ -87,22 +83,28 @@ export default {
   },
   methods: {
     generatePassword() {
-      if (!this.lengthpassword) return;
-      this.triggerLoading(true);
       let password = "";
-      let characters = "abcdefghijklmnopqrstuvwxyz";
-      if (this.characterInclUpperCase)
+      let characters = "";
+      if (this.characterInclUpperCase) {
+        characters += "abcdefghijklmnopqrstuvwxyz";
+      }
+      if (this.characterInclUpperCase) {
         characters += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-      if (this.characterInclNumber) characters += "0123456789";
-      if (this.characterInclSpecific)
+      }
+      if (this.characterInclNumber) {
+        characters += "0123456789";
+      }
+      if (this.characterInclSpecific) {
         characters += "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
+      }
       for (let i = 0; i < this.lengthpassword; i++) {
         password += characters.charAt(
           Math.floor(Math.random() * characters.length)
         );
       }
+      console.log(this.lengthpassword);
       this.generatedPassword = password;
-      this.triggerLoading(false);
+      this.characterInclLowerCase(false);
     },
     triggerLoading(state) {
       this.isLoading = state;
@@ -148,6 +150,55 @@ h1 {
   color: #f5efed;
   margin: 2rem;
 }
+label {
+  padding: 0.25rem;
+  color: #2292a4;
+  border: 0.15rem solid #2292a4;
+  background-color: #0f0a0a;
+  border-radius: 0.2rem;
+}
+
+input[type="checkbox"] {
+  all: unset;
+}
+
+input[type="checkbox"]:checked + label {
+  background-color: #2292a4;
+  color: black;
+}
+
+/*.designed-box {
+  padding: 0.25rem;
+  color: #2292a4;
+  border: 0.15rem solid #2292a4;
+  background-color: #0f0a0a;
+  border-radius: 0.2rem;
+}
+input[type="checkbox"]:checked + .designed-box {
+  background-color: #2292a4;
+  color: #f5efed;
+  border: 0.15rem solid #2292a4;
+}
+
+.box-upper:focus + .designed-box {
+  background-color: #2292a4;
+  color: #f5efed;
+  border: 0.15rem solid #2292a4;
+}
+.box-number:checked + .designed-box {
+  background-color: #2292a4;
+  color: #f5efed;
+  border: 0.15rem solid #2292a4;
+}
+.box-specific:checked + .designed-box {
+  background-color: #2292a4;
+  color: #f5efed;
+  border: 0.15rem solid #2292a4;
+}
+.box-lowercase:focus + .designed-box {
+  border: 0.2rem solid #2292a4;
+}
+*/
 .pre-condition-navigation {
   display: grid;
   width: 40vw;
@@ -179,49 +230,6 @@ h1 {
   grid-area: btn-4;
 }
 
-/*{
-  width: 50%;
-  padding-top: 5rem;
-  margin: auto;
-  display: flex;
-  justify-content: space-around;
-  gap: 2rem;
-}*/
-input {
-  all: unset;
-}
-.designed-box {
-  padding: 0.25rem;
-  color: #2292a4;
-  border: 0.15rem solid #2292a4;
-  background-color: #0f0a0a;
-  border-radius: 0.2rem;
-}
-input[type="checkbox"]:checked + .designed-box {
-  background-color: #2292a4;
-  color: #f5efed;
-  border: 0.15rem solid #2292a4;
-}
-
-.box-upper:focus + .designed-box {
-  background-color: #2292a4;
-  color: #f5efed;
-  border: 0.15rem solid #2292a4;
-}
-.box-number:checked + .designed-box {
-  background-color: #2292a4;
-  color: #f5efed;
-  border: 0.15rem solid #2292a4;
-}
-.box-specific:checked + .designed-box {
-  background-color: #2292a4;
-  color: #f5efed;
-  border: 0.15rem solid #2292a4;
-}
-
-.box-lowercase:focus + .designed-box {
-  border: 0.2rem solid #2292a4;
-}
 .password-length {
   color: #f5efed;
   padding-bottom: 2rem;
