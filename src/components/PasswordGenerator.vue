@@ -1,7 +1,9 @@
 <template>
-  <h1>{{ titleOfPage }}</h1>
-
+  <header>
+    <h1>{{ titleOfPage }}</h1>
+  </header>
   <body>
+    <p id="showThePassword"></p>
     <div class="btnToCopy">
       <p></p>
       <button>Copy to Clipboard</button>
@@ -81,6 +83,10 @@ export default {
     };
   },
   props: {
+    successPassword: {
+      type: String,
+      default: "PASSWORD",
+    },
     titleOfPage: {
       type: String,
       default: "Password-Generator",
@@ -111,7 +117,7 @@ export default {
       }
       console.log(this.lengthpassword);
       console.log(password);
-      this.generatedPassword = password;
+      document.getElementById("showThePassword").innerHTML = password;
     },
   },
 };
@@ -129,10 +135,18 @@ body {
   justify-content: center;
   flex-direction: column;
 }
-
+#showThePassword {
+  padding: 1.5rem;
+  background-color: lightgray;
+  color: #f5efed;
+  width: 50%;
+  height: 4rem;
+  border-radius: 0.25rem;
+}
 .btnToCopy {
   width: 50%;
 }
+
 button::before {
   content: "📓";
 }
@@ -155,6 +169,8 @@ h1 {
   margin: 2rem;
 }
 label {
+  display: block;
+  width: 10ch;
   padding: 0.25rem;
   color: #2292a4;
   border: 0.15rem solid #2292a4;
