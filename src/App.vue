@@ -1,5 +1,5 @@
 <template>
-  <PasswordGenerator msg="PASSWORD GENERATOR" />
+  <PasswordGenerator titleOfPage="PASSWORD GENERATOR" />
 </template>
 
 <script>

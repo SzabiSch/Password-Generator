@@ -1,5 +1,5 @@
 <template>
-  <h1>{{ msg }}</h1>
+  <h1>{{ titleOfPage }}</h1>
 
   <body>
     <div class="btnToCopy">
@@ -80,12 +80,20 @@ export default {
       characterInclSpecific: false,
     };
   },
+  props: {
+    titleOfPage: {
+      type: String,
+      default: "Password-Generator",
+    },
+  },
   methods: {
     generatePassword() {
       let password = "";
       let characters = "";
-      if (this.characterInclUpperCase) {
+      if (this.characterInclLowerrCase) {
         characters += "abcdefghijklmnopqrstuvwxyz";
+      } else {
+        characters = characters.replace(this.characterInclLowerCase);
       }
       if (this.characterInclUpperCase) {
         characters += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -102,11 +110,8 @@ export default {
         );
       }
       console.log(this.lengthpassword);
+      console.log(password);
       this.generatedPassword = password;
-      this.characterInclLowerCase(false);
-    },
-    triggerLoading(state) {
-      this.isLoading = state;
     },
   },
 };
@@ -166,47 +171,16 @@ input[type="checkbox"]:checked + label {
   color: black;
 }
 
-/*.designed-box {
-  padding: 0.25rem;
-  color: #2292a4;
-  border: 0.15rem solid #2292a4;
-  background-color: #0f0a0a;
-  border-radius: 0.2rem;
-}
-input[type="checkbox"]:checked + .designed-box {
-  background-color: #2292a4;
-  color: #f5efed;
-  border: 0.15rem solid #2292a4;
-}
-
-.box-upper:focus + .designed-box {
-  background-color: #2292a4;
-  color: #f5efed;
-  border: 0.15rem solid #2292a4;
-}
-.box-number:checked + .designed-box {
-  background-color: #2292a4;
-  color: #f5efed;
-  border: 0.15rem solid #2292a4;
-}
-.box-specific:checked + .designed-box {
-  background-color: #2292a4;
-  color: #f5efed;
-  border: 0.15rem solid #2292a4;
-}
-.box-lowercase:focus + .designed-box {
-  border: 0.2rem solid #2292a4;
-}
-*/
 .pre-condition-navigation {
   display: grid;
-  width: 40vw;
+
   height: 14vh;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   grid-template-areas:
     "btn-1 btn-2"
     "btn-3 btn-4";
+  gap: 1rem;
 }
 @media screen and (min-width: 800px) {
   .pre-condition-navigation {
