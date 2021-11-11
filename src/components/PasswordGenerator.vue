@@ -1,7 +1,6 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-  </div>
+  <h1>{{ msg }}</h1>
+
   <body>
     <div class="btnToCopy">
       <p></p>
@@ -56,10 +55,10 @@
         type="range"
         min="8"
         max="35"
-        v-model="value"
+        v-model="lengthpassword"
         id="myRange"
         step="1"
-        @input="generatePassword()"
+        @input="generatePassword"
       />
 
       <label class="length-of-password" for="myRange">{{
